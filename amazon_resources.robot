@@ -14,7 +14,15 @@ ${CANCELA_SEGURO}                 attach-popover-lgtbox
 ${VERIFICA_ADICIONOU_CARRINHO}    NATC_SMART_WAGON_CONF_MSG_SUCCESS
 ${EXCLUIR_CARRINHO}               //*[contains(text(),'Excluir')]
 ${VERIFICA_CARRINHO_COMPRAS}      //h1[contains(.,'Carrinho de compras')]
-${LOGIN}                 //span[@class='nav-line-1 nav-progressive-content'][contains(.,'Olá, faça seu login')]
+${LOGIN}                          //span[@class='nav-line-1 nav-progressive-content'][contains(.,'Olá, faça seu login')]
+${VERIFICA_TELA_LOGIN}            //h1[contains(.,'Fazer login')]
+${CAMPO_EMAIL}                    ap_email
+${EMAIL}                          yomeno9337@ibansko.com
+${CONTINUE}                       continue
+${VERIFICA_TELA_SENHA}            //label[@for='ap_password'][contains(.,'Senha')]
+${CAMPO_SENHA}                    ap_password
+${SENHA}                          234567
+${FAZER_LOGIN}                    signInSubmit
 
 *** Keywords ***
 Abrir navegador
@@ -25,6 +33,23 @@ Abrir navegador
 01 - Acesso ao home page de um e-commerce
     Go To    url=${URL}
     Wait Until Element Is Visible    id=${BUSCA}
+
+03 - Realizar o login
+    # Clica no Login
+    Click Element                     locator=${LOGIN}
+    Wait Until Element Is Visible     locator=${VERIFICA_TELA_LOGIN}
+    # Insere o Email
+    Input Text                        id=${CAMPO_EMAIL}     text=${EMAIL}
+    # Clica para continuar
+    Click Button                      id=${CONTINUE}  
+    Wait Until Element Is Visible     locator=${VERIFICA_TELA_SENHA} 
+    # Clica no campo senha
+    Click Button                      id=${CAMPO_SENHA} 
+    # Insere a senha
+    Input Text                        id=${CAMPO_SENHA}      text=${SENHA} 
+    # Clica no botão "Fazer Login"
+    Click Button                      id=${FAZER_LOGIN}   
+    Wait Until Element Is Visible     id=${BUSCA}
 
 04 - Adicionar algo ao carrinho do e-commerce
     # Seleciona a pesquisa
